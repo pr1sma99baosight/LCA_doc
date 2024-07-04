@@ -1,0 +1,208 @@
+以下是我在我的例子上加的，你看看，也许会有帮助
+就是这句了：
+worddoc.tables.item(1).cell(1,2).range.InlineShapes.AddPicture('E:\heartsong\0003.gif',False,True);//这就是加放入图片的语句
+ cell(1,2)表示第一行第2列的地方，根据你的就是cell(1,4)了,呵呵
+
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    Button1: TButton;
+    procedure InsertLines(LineNum:Integer);
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    wordApp,wordDoc:Variant;
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+uses ComObj;
+
+{$R *.DFM}
+
+procedure TForm1.Button1Click(Sender: TObject);
+var
+  StrAdd:String;
+  i:Integer;
+  wrdSelection:Variant;
+begin
+  //创建一个word对象
+  wordApp:=CreateOleObject('Word.Application');
+  wordApp.Visible:=true;
+  //创建一个word文档
+  wordDoc:=wordApp.Documents.Add();
+  wordDoc.Select;
+
+  wrdSelection:=wordApp.selection;
+
+  //在文档中插入内容
+  StrAdd:='插入一张图片';
+  wrdSelection.ParagraphFormat.Alignment:=wdAlignParagraphCenter;
+  wrdSelection.font.bold:=true;
+  wrdSelection.font.size:=15;
+  wrdSelection.font.Underline:=1;
+  wrdSelection.TypeText(StrAdd);
+
+  wrdSelection.font.Underline:=0;
+  wrdSelection.font.bold:=false;
+  wrdSelection.font.size:=11;
+  InsertLines(1);
+
+  //在文档中插入一个4行4列的表格，并格式化
+  wordDoc.Tables.Add(wrdSelection.Range,4,4,2,0);
+  wordDoc.Tables.Item(1).Borders.Item(1).LineStyle:=7;
+  wordDoc.Tables.Item(1).Borders.Item(2).LineStyle:=7;
+  wordDoc.Tables.Item(1).Borders.Item(3).LineStyle:=7;
+  wordDoc.Tables.Item(1).Borders.Item(4).LineStyle:=7;
+  for i:=1 to 4 do
+  begin
+    wordDoc.Tables.Item(1).Cell(i,1).Range.Bold:=true;
+    wordDoc.Tables.Item(1).Cell(i,3).Range.Bold:=true;
+    wordDoc.Tables.Item(1).Rows.Item(i).Range.Paragraphs.Alignment:=wdAlignParagraphCenter;
+  end;
+  //在第一个表格中插入内容
+  wordDoc.Tables.Item(1).Cell(1,1).Range.text:='岗位名称';
+  worddoc.tables.item(1).cell(1,2).range.InlineShapes.AddPicture('E:\heartsong\0003.gif',False,True);//这就是加放入图片的语句
+  wordDoc.Tables.Item(1).Cell(2,1).Range.InsertAfter('岗位级别');
+  wordDoc.Tables.Item(1).Cell(3,1).Range.InsertAfter('隶属部门');
+  wordDoc.Tables.Item(1).Cell(4,1).Range.InsertAfter('直接上级');
+  wordDoc.Tables.Item(1).Cell(1,3).Range.InsertAfter('岗位编号');
+  wordDoc.Tables.Item(1).Cell(2,3).Range.InsertAfter('现任职者');
+  wordDoc.Tables.Item(1).Cell(3,3).Range.InsertAfter('分支机构');
+  wordDoc.Tables.Item(1).Cell(4,3).Range.InsertAfter('直接下级');
+
+ //保存文档
+
+......
+end;
+
+end.
+
+
+
+
+Delphi操作word的基本用法 (转) (2012-03-08 15:55:12)转载▼
+标签： 杂谈	
+转自：http://blog.csdn.net/soasoa/article/details/2951487
+刚把delphi捡起来，第一个要做的竟然操作word，总结一下。
+一. 定义word应用程序，文档对象，比如：
+wordApp: OleVariant;
+   wordDoc: OleVariant;
+二. 打开word文档
+ wordApp := CreateOleObject('Word.Application');
+ wordDoc := WordApp.Documents.Open(FileName:=filename,
+     ReadOnly:= false, Revert:=True, Visible:= True);
+   WordApp.Visible := false;
+ 
+三.表格插入数据
+ WordDoc.Tables.Item(TbIndex).cell(cellrow,cellcol).Range.InsertAfter(conStr);
+       
+四.在指定行写数据
+ WordDoc.Paragraphs.Item(16).Range.InsertAfter('abcd');
+ 
+五.指定字符位置插入数据
+ MyRange: OleVariant;
+ MyRange := wordDoc.Range(Start:=0,End:=10);
+ MyRange.InsertAfter('abcd'+#13);
+ 
+六.文件保存
+ wordDoc.SaveAs(filename);
+七.连接word(联系:二打开文档)
+//测试当前是否运行了word
+try
+v := getactiveoleobject(word.application);
+except
+//未运行则运行之
+v := createoleobject(word.basic);
+end;
+try
+//连接到word
+wordapp.connect;
+except
+beep;
+messagedlg(不能生成文档，请确认是否安装了word 2000！, mterror, [mbok], 0);
+abort;
+end;
+//
+八.复制打开的word的内容
+WordApp := CreateOleObject('Word.Application');   //创建word对象
+WordApp.Documents.open(file1);    //打开一个word文档
+wordapp.visible:=false;             //是否让打开的word文档显示出来
+wordapp.activedocument.select;    //选取打开的word文档中全部内容
+wordapp.selection.copy;           //拷贝选取的内容
+memo1.PasteFromClipboard;       //把拷贝的内容粘贴到richedit中
+WordApp.Quit;               //关闭对象
+九.粘贴至word（粘贴板）
+WordApp := CreateOleObject('Word.Application');   //创建word对象
+WordApp.Visible:= True ;
+WordApp.Documents.Add;
+WordApp.Documents.Item(1).Range.paste;
+十.新建文档:
+格式：WordDocuments.Add(Template,NewTemplate,DocumentType,Visible)
+Template： 使用模板的名称，
+NewTemplate： 新建文档的类型，True表示为模板，False表示为文档
+DocumentType： 文档类型，默认为空白文档
+Visible： 打捞的窗口是否可见
+举例：Doc_Handle:=Word_Ole.Documents.Add(Template:='C:/Temlate.dot',NewTemplate:=False);
+十一.连接已打开文档
+WordDocument.ConnectTo(WordApplication.Documents.Item(ItemIndex));
+
+
+
+
+  WordApp:=CreateOleObject('Word.Application');   
+      WordDoc:=WordApp.Documents.Open('c:\Test.Doc');   
+      WordApp.Visible:=True;   
+      WordDoc.InlineShapes.Item(1).ConvertToShape;   
+      WordDoc.Shapes.Item(1).WrapFormat.Type:=   0;   
+
+
+
+http://blog.csdn.net/csm2432/article/details/7692443
+
+
+
+
+
+
+procedure   TForm1.PasPic(Number:   integer);   
+  var   filename,   Flag,   PicName,   PicTop,   PicLeft,   PicWid,   PicHie,   issave,   PicItem,   IsToSave,   range,   start:   olevariant;   
+        sta:   integer;   
+  begin   
+        WordDocument1.ConnectTo(WordApplication1.ActiveDocument);   
+        issave   :=   true;   
+        PicName   :=   ExtractFilepath(application.ExeName)   +   'date\dy.jpeg';   
+    
+        start   :=   WordDocument1.Paragraphs.Item(WordDocument1.Paragraphs.Count).Range.End_   -   1;//这是最后一段，你想右对齐的话自已想办法定义吧   
+        range   :=   WordDocument1.Range(start);   
+    
+        WordDocument1.Shapes.AddPicture(PicName,   Flag,   Issave,   emptyparam,   emptyparam,   emptyparam,   emptyparam,   range);   
+        PicItem   :=   WordDocument1.Shapes.Count;   
+        WordDocument1.Shapes.Item(PicItem).WrapFormat.Type_   :=   wdWrapNone;//   
+        WordDocument1.Shapes.Item(PicItem).ZOrder(4);   
+    
+        WordApplication1.Disconnect;   
+    
+  end;
+
+
+//	wdWrapInline 7 将形状嵌入到文字中。 
+//	wdWrapNone 3 将形状放在文字前面。请参阅 wdWrapFront 。
+//	wdWrapSquare 0 使文字环绕形状。行在形状的另一侧延续。
+//	wdWrapThrough 2 使文字环绕形状。
+//	wdWrapTight 1 使文字紧密地环绕形状。
+//	wdWrapTopBottom 4 将文字放在形状的上方和下方。
+//	wdWrapBehind 5 将形状放在文字后面。
+//	wdWrapFront 6 将形状放在文字前面。

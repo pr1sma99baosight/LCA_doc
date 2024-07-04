@@ -1,0 +1,20 @@
+2017.12.16 修复 工序流程图之间箭头上无数据显示问题
+
+2018.2.7  修复LCIA计算单位问题
+
+2018.9.2 修复LCA结果中 大气污染物*1000、水体污染物*1000000 单位问题
+
+2018.9.5  修复   g_onsite_e.Elem[i, j] := g1_e.Elem[i, j] + g2_e.Elem[i, j] + g3_e.Elem[i, j]+g4_e.Elem[i, j];  漏加了g4_e.Elem[i, j]
+
+2018.9.7   上游up g6   判断依据
+//    Aqr1.SQL.Add('select * from data_allocation where material_type = ' + #39 + '产品' + #39 + ' or material_type=' + #39 + '副产品或固体废弃物' + #39);
+
+    Aqr1.SQL.Add('select * from data_allocation where material_type = ' + #39 + '产品' + #39  );
+
+2018.9.9  direct 程序 单位换算1000  1000000
+删除  LCA计算  中的单位换算
+
+
+2019.2.18      
+修复BPEI计算中公式写错的bug      site写成了route
+g7_e及g7计算、以及g7分布计算中  修复listbox1重复记录bug

@@ -1,0 +1,155 @@
+object Form_loadproject: TForm_loadproject
+  Left = 499
+  Top = 251
+  Width = 480
+  Height = 323
+  BorderIcons = [biSystemMenu]
+  Caption = #36733#20837#25968#25454
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poMainFormCenter
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 8
+    Top = 16
+    Width = 80
+    Height = 21
+    Caption = #35831#36873#25321#39033#30446
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = #24494#36719#38597#40657
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 352
+    Top = 8
+    Width = 32
+    Height = 13
+    Caption = 'Label2'
+    Visible = False
+  end
+  object bsSkinPanel4: TbsSkinPanel
+    Left = 32
+    Top = 48
+    Width = 241
+    Height = 223
+    TabOrder = 0
+    SkinDataName = 'panel'
+    DefaultFont.Charset = DEFAULT_CHARSET
+    DefaultFont.Color = clWindowText
+    DefaultFont.Height = 14
+    DefaultFont.Name = 'Arial'
+    DefaultFont.Style = []
+    DefaultWidth = 0
+    DefaultHeight = 0
+    UseSkinFont = True
+    RealHeight = -1
+    AutoEnabledControls = True
+    CheckedMode = False
+    Checked = False
+    DefaultAlignment = taLeftJustify
+    DefaultCaptionHeight = 22
+    BorderStyle = bvFrame
+    CaptionMode = False
+    RollUpMode = False
+    RollUpState = False
+    NumGlyphs = 1
+    Spacing = 2
+    Caption = 'bsSkinPanel2'
+    object ListBox1: TListBox
+      Left = 1
+      Top = 1
+      Width = 239
+      Height = 221
+      Align = alCustom
+      BorderStyle = bsNone
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -14
+      Font.Name = #24494#36719#38597#40657
+      Font.Style = []
+      ItemHeight = 20
+      Items.Strings = (
+        #22823#26753#38050'2015'
+        #31232#22303#38050#36712'2015'
+        'test1'
+        'test2')
+      ParentFont = False
+      TabOrder = 0
+    end
+  end
+  object bsSkinButton9: TbsSkinButton
+    Left = 328
+    Top = 56
+    Width = 121
+    Height = 41
+    TabOrder = 1
+    SkinDataName = 'button'
+    DefaultFont.Charset = ANSI_CHARSET
+    DefaultFont.Color = clWindowText
+    DefaultFont.Height = -14
+    DefaultFont.Name = #24494#36719#38597#40657
+    DefaultFont.Style = []
+    DefaultWidth = 0
+    DefaultHeight = 0
+    UseSkinFont = True
+    RepeatMode = False
+    RepeatInterval = 100
+    AllowAllUp = False
+    TabStop = True
+    CanFocused = True
+    Down = False
+    GroupIndex = 0
+    Caption = #30830#23450
+    NumGlyphs = 1
+    Spacing = 1
+    Align = alCustom
+    OnClick = bsSkinButton9Click
+  end
+  object bsSkinButton1: TbsSkinButton
+    Left = 328
+    Top = 128
+    Width = 121
+    Height = 41
+    TabOrder = 2
+    SkinDataName = 'button'
+    DefaultFont.Charset = ANSI_CHARSET
+    DefaultFont.Color = clWindowText
+    DefaultFont.Height = -14
+    DefaultFont.Name = #24494#36719#38597#40657
+    DefaultFont.Style = []
+    DefaultWidth = 0
+    DefaultHeight = 0
+    UseSkinFont = True
+    RepeatMode = False
+    RepeatInterval = 100
+    AllowAllUp = False
+    TabStop = True
+    CanFocused = True
+    Down = False
+    GroupIndex = 0
+    Caption = #21462#28040
+    NumGlyphs = 1
+    Spacing = 1
+    Align = alCustom
+    OnClick = bsSkinButton1Click
+  end
+  object ADOQuery7: TADOQuery
+    Parameters = <>
+    Left = 360
+    Top = 200
+  end
+  object ADOConnection3: TADOConnection
+    LoginPrompt = False
+    Left = 312
+    Top = 208
+  end
+end
